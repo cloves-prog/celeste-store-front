@@ -12,12 +12,12 @@ import { makeStyles } from "@material-ui/core";
 const Products: React.FC = (props) => {
   const maker = makeStyles((theme) => ({
     error: {
-      marginTop: theme.spacing(5)
+      marginTop: theme.spacing(5),
     },
     tableContainer: {
-      padding: theme.spacing(2)
-    }
-  }))
+      padding: theme.spacing(2),
+    },
+  }));
   const styles = maker();
 
   const location = useLocation();
@@ -34,14 +34,18 @@ const Products: React.FC = (props) => {
     { title: "Marca", field: "brand" },
     { title: "Fornecedor", field: "provider" },
     { title: "Classificação", field: "classification" },
-    { title: "Preço de custo", field: "cost_price", type: "numeric"},
-    { title: "Preço de venda", field: "sales_price", type: "numeric"},
-    {title: "Quantidade em estoque",  field: "stock_quantity",type: "numeric"},
+    { title: "Preço de custo", field: "cost_price", type: "numeric" },
+    { title: "Preço de venda", field: "sales_price", type: "numeric" },
+    {
+      title: "Quantidade em estoque",
+      field: "stock_quantity",
+      type: "numeric",
+    },
     { title: "Quantidade em loja", field: "store_quantity", type: "numeric" },
   ];
 
   const handleRowAdd = (newData: Product): Promise<void> => {
-    console.log('@todo: Adicionar action para Criar o produto')
+    console.log("Novo: ", newData);
     return Promise.resolve();
   };
 
@@ -50,14 +54,14 @@ const Products: React.FC = (props) => {
     oldData?: Product
   ): Promise<void> => {
     if (oldData) {
-      console.log('@todo: Adicionar action para Atualizar o produto')
+      console.log("@todo: Adicionar action para Atualizar o produto");
     }
 
     return Promise.resolve();
   };
 
   const handleDeleteRow = (oldData: Product): Promise<void> => {
-    console.log('@todo: Adicionar action para Deletar o produto')
+    console.log("@todo: Adicionar action para Deletar o produto");
     return Promise.resolve();
   };
 
@@ -71,7 +75,7 @@ const Products: React.FC = (props) => {
         </Alert>
       )}
 
-      {productsState.data.length > 0 &&
+      {productsState.data.length > 0 && (
         <div className={styles.tableContainer}>
           <MaterialTable
             title="Gerenciamento de produtos"
@@ -84,8 +88,7 @@ const Products: React.FC = (props) => {
             }}
           />
         </div>
-      }
-      
+      )}
     </>
   );
 };
