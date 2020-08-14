@@ -2,10 +2,12 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import products from './product';
 import clients from './client';
+import salesPeople from './sales-people';
 
 const rootReducer = combineReducers({
   products,
   clients,
+  salesPeople,
 })
 
 export type AppState = ReturnType<typeof rootReducer>

@@ -19,7 +19,6 @@ const Clients: React.FC = () => {
   }, [dispatch]);
   
   const columns: Column<Client>[] = [
-    {title: "ID", field: 'id'},
     {title: "Nome", field: 'name'},
     {title: "Endereço", field: 'address'},
     {title: "Telefone", field: 'phone'},

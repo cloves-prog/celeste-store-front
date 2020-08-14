@@ -19,7 +19,6 @@ const Products: React.FC = (props) => {
   }, [dispatch]);
 
   const columns: Column<Product>[] = [
-    { title: "ID", field: "id" },
     { title: "Nome", field: "name" },
     { title: "Descrição", field: "description" },
     { title: "Marca", field: "brand" },
