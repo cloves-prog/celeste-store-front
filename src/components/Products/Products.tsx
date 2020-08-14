@@ -1,25 +1,15 @@
 import React, { useEffect } from "react";
 import TopBar from "../TopBar";
 import { useLocation } from "react-router-dom";
-import MaterialTable, { Column } from "material-table";
+import { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, AlertTitle } from "@material-ui/lab";
 import { fetchProducts } from "../../store/product/actions";
 import { AppState } from "../../store";
 import { Product } from "../../interfaces/Product";
-import { makeStyles } from "@material-ui/core";
+import Table from "../ui/Table";
+import AlertError from "../ui/AlertError";
 
 const Products: React.FC = (props) => {
-  const maker = makeStyles((theme) => ({
-    error: {
-      marginTop: theme.spacing(5),
-    },
-    tableContainer: {
-      padding: theme.spacing(2),
-    },
-  }));
-  const styles = maker();
-
   const location = useLocation();
   const dispatch = useDispatch();
   const productsState = useSelector((state: AppState) => state.products);
@@ -29,6 +19,7 @@ const Products: React.FC = (props) => {
   }, [dispatch]);
 
   const columns: Column<Product>[] = [
+    { title: "ID", field: "id" },
     { title: "Nome", field: "name" },
     { title: "Descrição", field: "description" },
     { title: "Marca", field: "brand" },
@@ -44,7 +35,7 @@ const Products: React.FC = (props) => {
     { title: "Quantidade em loja", field: "store_quantity", type: "numeric" },
   ];
 
-  const handleRowAdd = (newData: Product): Promise<void> => {
+  const handleRowAdd = (newData: Product): Promise<any> => {
     console.log("Novo: ", newData);
     return Promise.resolve();
   };
@@ -52,7 +43,7 @@ const Products: React.FC = (props) => {
   const handleUpdateRow = (
     newData: Product,
     oldData?: Product
-  ): Promise<void> => {
+  ): Promise<any> => {
     if (oldData) {
       console.log("@todo: Adicionar action para Atualizar o produto");
     }
@@ -60,34 +51,26 @@ const Products: React.FC = (props) => {
     return Promise.resolve();
   };
 
-  const handleDeleteRow = (oldData: Product): Promise<void> => {
-    console.log("@todo: Adicionar action para Deletar o produto");
+  const handleDeleteRow = (oldData: Product): Promise<any> => {
+    console.log("oldData: ", oldData);
     return Promise.resolve();
   };
 
   return (
     <>
       <TopBar currentPath={location.pathname} />
-      {productsState.error && (
-        <Alert className={styles.error} severity="error">
-          <AlertTitle>Error</AlertTitle>
-          Erro ao tentar se comunicar com o servidor.
-        </Alert>
-      )}
-
+      {productsState.error && 
+          <AlertError message="Ocorreu um erro ao tentar buscar os produtos" />
+      }
       {productsState.data.length > 0 && (
-        <div className={styles.tableContainer}>
-          <MaterialTable
-            title="Gerenciamento de produtos"
-            columns={columns}
-            data={productsState.data}
-            editable={{
-              onRowAdd: handleRowAdd,
-              onRowUpdate: handleUpdateRow,
-              onRowDelete: handleDeleteRow,
-            }}
-          />
-        </div>
+        <Table 
+          columns={columns}
+          handleDeleteRow={handleDeleteRow}
+          handleRowAdd={handleRowAdd}
+          handleUpdateRow={handleUpdateRow}
+          data={productsState.data}
+          title="Gerenciamento de produtos"
+        ></Table>
       )}
     </>
   );

@@ -1,9 +1,11 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
-import products from './product';
 import thunk from 'redux-thunk';
+import products from './product';
+import clients from './client';
 
 const rootReducer = combineReducers({
   products,
+  clients,
 })
 
 export type AppState = ReturnType<typeof rootReducer>
