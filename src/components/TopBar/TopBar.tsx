@@ -35,7 +35,7 @@ const TopBar: React.FC<Props> = (props: Props) => {
   };
 
   return (
-    <AppBar color="inherit" className={classes.appBar}>
+    <AppBar position="relative" color="inherit" className={classes.appBar}>
       <Toolbar>
         <div className={classes.tabContainer}>
           <Tabs
