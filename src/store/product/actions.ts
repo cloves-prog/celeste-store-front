@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { Action, ActionTypes } from './types';
-import { fetchProduct as fetch } from '../../services/products';
+import { fetch } from '../../services/products';
 
 export const fetchProducts = () => async (dispatch: Dispatch<Action>) => {
   try {
