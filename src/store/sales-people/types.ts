@@ -2,8 +2,7 @@ import { SalesPeople } from "../../interfaces/SalesPeople";
 
 export interface SalesPeoplesState {
   data: SalesPeople[]
-  error: boolean,
-  resourceAction?: string,
+  messageError?: string | null,
 }
 
 export enum ActionTypes {

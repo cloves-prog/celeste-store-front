@@ -2,8 +2,6 @@ import { SalesPeoplesState, Action, ActionTypes } from "./types";
 
 const INITIAL_STATE: SalesPeoplesState = {
   data: [],
-  error: false,
-  resourceAction: "se comunicar com o servidor",
 };
 
 const reducer = (state = INITIAL_STATE, action: Action): SalesPeoplesState => {
@@ -14,14 +12,12 @@ const reducer = (state = INITIAL_STATE, action: Action): SalesPeoplesState => {
       return {
         ...state,
         data: action.payload,
-        error: false,
-        resourceAction: INITIAL_STATE.resourceAction,
+        messageError: null,
       };
     case ActionTypes.FETCH_SALESPEOPLE_ERROR:
       return {
         ...state,
-        error: true,
-        resourceAction: "listar os vendedores",
+        messageError: "Ocorreu um erro ao listar os vendedores",
       };
     case ActionTypes.CREATE_SALESPEOPLE_SUCCESS:
       data.push(action.payload);
@@ -29,24 +25,25 @@ const reducer = (state = INITIAL_STATE, action: Action): SalesPeoplesState => {
       return {
         ...state,
         data,
-        error: false,
-        resourceAction: INITIAL_STATE.resourceAction,
+        messageError: null
       };
     case ActionTypes.CREATE_SALESPEOPLE_ERROR:
       return {
         ...state,
-        error: true,
-        resourceAction: "criar um vendedor",
+        messageError: "Ocorreu um erro ao criar um vendedor",
       };
     case ActionTypes.DELETE_SALESPEOPLE_SUCCESS:
       data.splice(data.indexOf(action.payload), 1);
 
-      return { ...state, data };
+      return { 
+        ...state, 
+        data,
+        messageError: null,
+      };
     case ActionTypes.DELETE_SALESPEOPLE_ERROR:
       return {
         ...state,
-        error: true,
-        resourceAction: "deletar um vendedor",
+        messageError: "Ocorreu um erro ao deletar um vendedor",
       };
     case ActionTypes.UPDATE_SALESPEOPLE_SUCCESS:
       const updatedData = data.map((salesPeople) =>
@@ -56,14 +53,12 @@ const reducer = (state = INITIAL_STATE, action: Action): SalesPeoplesState => {
       return {
         ...state,
         data: updatedData,
-        error: false,
-        resourceAction: INITIAL_STATE.resourceAction,
+        messageError: null,
       };
     case ActionTypes.UPDATE_SALESPEOPLE_ERROR:
       return {
         ...state,
-        error: true,
-        resourceAction: "atualizar um vendedor",
+        messageError: "Ocorreu um erro ao atualizar um vendedor",
       };
     default:
       return state;

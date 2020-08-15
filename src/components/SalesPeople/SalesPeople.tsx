@@ -51,8 +51,8 @@ const SalesPeoplePage: React.FC = () => {
   return (
     <>
       <TopBar currentPath={location.pathname} />
-      {salesPeopleState.error && (
-        <AlertError message={`Ocorreu um erro ao ${salesPeopleState.resourceAction}`} />
+      {salesPeopleState.messageError && (
+        <AlertError message={salesPeopleState.messageError} />
       )}
 
       <Table

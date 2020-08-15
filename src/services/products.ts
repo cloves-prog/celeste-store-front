@@ -9,7 +9,7 @@ export const fetch = async (): Promise<Product[]> => {
   return response.data;
 };
 
-export const create = async (data: Product): Promise<Product[]> => {
+export const create = async (data: Product): Promise<Product> => {
   const response = await api.post(
     '/products',
     data
@@ -18,7 +18,7 @@ export const create = async (data: Product): Promise<Product[]> => {
   return response.data;
 };
 
-export const update = async (data: Product): Promise<Product[]> => {
+export const update = async (data: Product): Promise<Product> => {
   const response = await api.put(
     `/products/${data.id}`,
     data
@@ -27,7 +27,7 @@ export const update = async (data: Product): Promise<Product[]> => {
   return response.data;
 };
 
-export const destroy = async (data: Product): Promise<Product[]> => {
+export const destroy = async (data: Product): Promise<Product> => {
   const response = await api.delete(
     `/products/${data.id}`
   );

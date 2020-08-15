@@ -3,7 +3,12 @@ import TopBar from "../TopBar";
 import { useLocation } from "react-router-dom";
 import { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../store/product/actions";
+import {
+  fetchProducts,
+  deleteProduct,
+  updateProduct,
+  createProduct
+} from "../../store/product/actions";
 import { AppState } from "../../store";
 import { Product } from "../../interfaces/Product";
 import Table from "../ui/Table";
@@ -35,33 +40,27 @@ const Products: React.FC = (props) => {
   ];
 
   const handleRowAdd = (newData: Product): Promise<any> => {
-    console.log("Novo: ", newData);
+    dispatch(createProduct(newData));
     return Promise.resolve();
   };
 
-  const handleUpdateRow = (
-    newData: Product,
-    oldData?: Product
-  ): Promise<any> => {
-    if (oldData) {
-      console.log("@todo: Adicionar action para Atualizar o produto");
-    }
-
+  const handleUpdateRow = (newData: Product): Promise<any> => {
+    dispatch(updateProduct(newData));
     return Promise.resolve();
   };
 
   const handleDeleteRow = (oldData: Product): Promise<any> => {
-    console.log("oldData: ", oldData);
+    dispatch(deleteProduct(oldData));
     return Promise.resolve();
   };
 
   return (
     <>
       <TopBar currentPath={location.pathname} />
-      {productsState.error && 
-          <AlertError message="Ocorreu um erro ao tentar buscar os produtos" />
-      }
-      <Table 
+      {productsState.messageError && (
+        <AlertError message={productsState.messageError} />
+      )}
+      <Table
         columns={columns}
         handleDeleteRow={handleDeleteRow}
         handleRowAdd={handleRowAdd}
