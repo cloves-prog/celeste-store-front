@@ -7,8 +7,9 @@ import {
   fetchProducts,
   deleteProduct,
   updateProduct,
-  createProduct
+  createProduct,
 } from "../../store/product/actions";
+import validator from "../../commons/validate";
 import { AppState } from "../../store";
 import { Product } from "../../interfaces/Product";
 import Table from "../ui/Table";
@@ -24,19 +25,79 @@ const Products: React.FC = (props) => {
   }, [dispatch]);
 
   const columns: Column<Product>[] = [
-    { title: "Nome", field: "name" },
-    { title: "Descrição", field: "description" },
-    { title: "Marca", field: "brand" },
-    { title: "Fornecedor", field: "provider" },
-    { title: "Classificação", field: "classification" },
-    { title: "Preço de custo", field: "cost_price", type: "numeric" },
-    { title: "Preço de venda", field: "sales_price", type: "numeric" },
+    {
+      title: "Nome",
+      field: "name",
+      validate: (product) => validator(product.name, 3, "default"),
+    },
+    {
+      title: "Descrição",
+      field: "description",
+      validate: (product) => validator(product.description, 5, "default"),
+    },
+    {
+      title: "Marca",
+      field: "brand",
+      validate: (product) => validator(product.brand, 2, "default"),
+    },
+    {
+      title: "Fornecedor",
+      field: "provider",
+      validate: (product) => validator(product.provider, 2, "default"),
+    },
+    {
+      title: "Classificação",
+      field: "classification",
+      validate: (product) => validator(product.classification, 3, "default"),
+    },
+    {
+      title: "Preço de custo",
+      field: "cost_price",
+      type: "numeric",
+      validate: (product) =>
+        !product || !product.cost_price
+          ? {
+              helperText: "O preço de custo é obrigatório",
+              isValid: false,
+            }
+          : true
+    },
+    {
+      title: "Preço de venda",
+      field: "sales_price",
+      type: "numeric",
+      validate: (product) =>
+        !product || !product.sales_price
+          ? {
+              helperText: "O preço de venda é obrigatório",
+              isValid: false,
+            }
+          : true
+    },
     {
       title: "Quantidade em estoque",
       field: "stock_quantity",
       type: "numeric",
+      validate: (product) =>
+        !product || !product.stock_quantity
+          ? {
+              helperText: "A qtd em estoque é obrigatório",
+              isValid: false,
+            }
+          : true
     },
-    { title: "Quantidade em loja", field: "store_quantity", type: "numeric" },
+    { 
+      title: "Quantidade em loja", 
+      field: "store_quantity", 
+      type: "numeric",
+      validate: (product) =>
+      !product || !product.store_quantity
+        ? {
+            helperText: "A qtd em loja é obrigatório",
+            isValid: false,
+          }
+        : true
+    },
   ];
 
   const handleRowAdd = (newData: Product): Promise<any> => {

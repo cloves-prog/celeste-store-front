@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../store";
 import AlertError from "../ui/AlertError";
+import validator from '../../commons/validate';
 import {
   fetchSalesPeople,
   createSalesPeople,
@@ -28,8 +29,7 @@ const SalesPeoplePage: React.FC = () => {
     { 
       title: "Nome", 
       field: "name", 
-      validate: salesPeople => !salesPeople.name || salesPeople.name.length < 3 ? { 
-        isValid: false, helperText: 'O nome precisa conter no mínimo 3 caracteres' } : true 
+      validate: (salesPeople) => validator(salesPeople.name, 3, "default"),
     }
   ];
 

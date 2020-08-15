@@ -9,7 +9,7 @@ export const fetch = async (): Promise<Client[]> => {
   return response.data;
 };
 
-export const create = async (data: Client): Promise<Client[]> => {
+export const create = async (data: Client): Promise<Client> => {
   const response = await api.post(
     '/clients',
   );
@@ -17,7 +17,7 @@ export const create = async (data: Client): Promise<Client[]> => {
   return response.data;
 };
 
-export const update = async (data: Client): Promise<Client[]> => {
+export const update = async (data: Client): Promise<Client> => {
   const response = await api.put(
     `/clients/${data.id}`,
     data
@@ -26,7 +26,7 @@ export const update = async (data: Client): Promise<Client[]> => {
   return response.data;
 };
 
-export const destroy = async (data: Client): Promise<Client[]> => {
+export const destroy = async (data: Client): Promise<Client> => {
   const response = await api.delete(
     `/clients/${data.id}`
   );
