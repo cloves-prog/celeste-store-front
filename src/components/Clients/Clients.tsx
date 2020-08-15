@@ -45,16 +45,14 @@ const Clients: React.FC = () => {
         <AlertError message="Ocorreu um erro ao tentar buscar os clientes"/>
       }
 
-      {clientsState.data.length > 0 &&
-        <Table 
-          data={clientsState.data} 
-          columns={columns}
-          handleDeleteRow={handleDeleteRow}
-          handleRowAdd={handleRowAdd}
-          handleUpdateRow={handleUpdateRow}
-          title="Gerenciamento de clientes"
-        />
-      }
+      <Table 
+        data={clientsState.data} 
+        columns={columns}
+        handleDeleteRow={handleDeleteRow}
+        handleRowAdd={handleRowAdd}
+        handleUpdateRow={handleUpdateRow}
+        title="Gerenciamento de clientes"
+      />
     </>
   )
 };

@@ -4,63 +4,67 @@ import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../store";
 import AlertError from "../ui/AlertError";
-import { fetchSalesPeople } from "../../store/sales-people/actions";
+import {
+  fetchSalesPeople,
+  createSalesPeople,
+  updateSalesPeople,
+  deleteSalesPeople,
+} from "../../store/sales-people/actions";
+
 import Table from "../ui/Table";
 import { Column } from "material-table";
 import { SalesPeople } from "../../interfaces/SalesPeople";
 
 const SalesPeoplePage: React.FC = () => {
   const location = useLocation();
-  const salesPeopleState = useSelector((state: AppState) => state.salesPeople)
+  const salesPeopleState = useSelector((state: AppState) => state.salesPeople);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchSalesPeople())
-  }, [dispatch])
+    dispatch(fetchSalesPeople());
+  }, [dispatch]);
 
   const columns: Column<SalesPeople>[] = [
-    {title: "name", field: "name"}
+    { 
+      title: "Nome", 
+      field: "name", 
+      validate: salesPeople => !salesPeople.name || salesPeople.name.length < 3 ? { 
+        isValid: false, helperText: 'O nome precisa conter no mínimo 3 caracteres' } : true 
+    }
   ];
 
-  const handleRowAdd = (newData: SalesPeople): Promise<any> => {
-    console.log("Novo: ", newData);
+  const handleRowAdd = (newData: SalesPeople): Promise<void> => {
+    dispatch(createSalesPeople(newData));
     return Promise.resolve();
   };
 
-  const handleUpdateRow = (
-    newData: SalesPeople,
-    oldData?: SalesPeople
-  ): Promise<any> => {
-    if (oldData) {
-      console.log("@todo: Adicionar action para Atualizar o produto");
-    }
-
+  const handleUpdateRow = (newData: SalesPeople): Promise<void> => {
+    dispatch(updateSalesPeople(newData));
     return Promise.resolve();
   };
 
-  const handleDeleteRow = (oldData: SalesPeople): Promise<any> => {
-    console.log("oldData: ", oldData);
+  const handleDeleteRow = (oldData: SalesPeople): Promise<void> => {
+    dispatch(deleteSalesPeople(oldData));
     return Promise.resolve();
   };
 
   return (
     <>
       <TopBar currentPath={location.pathname} />
-      {salesPeopleState.error && 
-        <AlertError message="Ocorreu um erro ao tentar buscar os vendedores"/>}
+      {salesPeopleState.error && (
+        <AlertError message={`Ocorreu um erro ao ${salesPeopleState.resourceAction}`} />
+      )}
 
-      {salesPeopleState.data.length > 0 && 
-      <Table 
+      <Table
         data={salesPeopleState.data}
         columns={columns}
         handleDeleteRow={handleDeleteRow}
         handleRowAdd={handleRowAdd}
         handleUpdateRow={handleUpdateRow}
         title="Gerenciamento de vendedores"
-      />}
+      />
     </>
-
-  )
+  );
 };
 
 export default SalesPeoplePage;

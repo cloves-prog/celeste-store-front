@@ -61,16 +61,14 @@ const Products: React.FC = (props) => {
       {productsState.error && 
           <AlertError message="Ocorreu um erro ao tentar buscar os produtos" />
       }
-      {productsState.data.length > 0 && (
-        <Table 
-          columns={columns}
-          handleDeleteRow={handleDeleteRow}
-          handleRowAdd={handleRowAdd}
-          handleUpdateRow={handleUpdateRow}
-          data={productsState.data}
-          title="Gerenciamento de produtos"
-        ></Table>
-      )}
+      <Table 
+        columns={columns}
+        handleDeleteRow={handleDeleteRow}
+        handleRowAdd={handleRowAdd}
+        handleUpdateRow={handleUpdateRow}
+        data={productsState.data}
+        title="Gerenciamento de produtos"
+      ></Table>
     </>
   );
 };
