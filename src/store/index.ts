@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import products from './product';
 import clients from './client';
 import salesPeople from './sales-people';
+import resume from './resume';
 
 const rootReducer = combineReducers({
   products,
   clients,
   salesPeople,
+  resume,
 })
 
 export type AppState = ReturnType<typeof rootReducer>
