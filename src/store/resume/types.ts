@@ -1,8 +1,8 @@
 import {  Resume } from "../../interfaces/Resume";
 
 export interface ResumeState {
-  data: Resume | null;
-  messageError?: string | null;
+  data?: Resume;
+  messageError: string | null;
 }
 
 export enum ActionTypes {

@@ -2,9 +2,6 @@ import { Action, ActionTypes, ResumeState } from "./types";
 
 const INITIAL_STATE: ResumeState = {
   messageError: null,
-  data: {
-    bestClients: null,
-  },
 };
 
 export default function reducer(state = INITIAL_STATE, action: Action) {

@@ -1,9 +1,10 @@
-export interface BestClient {
+export interface Resource {
   name: string,
   id: number;
   total: number;
 }
 
 export interface Resume {
-  bestClients: BestClient[] | null
+  bestClients?: Resource[];
+  bestSalesPeople?: Resource[];
 }
