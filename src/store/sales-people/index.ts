@@ -43,7 +43,7 @@ const reducer = (state = INITIAL_STATE, action: Action): SalesPeoplesState => {
     case ActionTypes.DELETE_SALESPEOPLE_ERROR:
       return {
         ...state,
-        messageError: "Ocorreu um erro ao deletar um vendedor",
+        messageError: "Vendedor não pode ser deletado, pois possui vendas relacionadas",
       };
     case ActionTypes.UPDATE_SALESPEOPLE_SUCCESS:
       const updatedData = data.map((salesPeople) =>

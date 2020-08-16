@@ -58,7 +58,7 @@ const reducer = (state = INITIAL_STATE, action: Action): ProductsState => {
     case ActionTypes.DELETE_PRODUCTS_ERROR:
       return{
         ...state,
-        messageError: "Ocorreu um erro ao atualizar o produto"
+        messageError: "O produto não pode ser deletado, pois possui vendas associadas"
       }
     default:
       return state;

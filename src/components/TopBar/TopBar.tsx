@@ -42,7 +42,6 @@ const TopBar: React.FC<Props> = (props: Props) => {
             value={currentTab()}
             indicatorColor="primary"
             textColor="primary"
-            // onChange={setActiveTab()}
           >
             {Menu.map((item, index) => (
               <Tab

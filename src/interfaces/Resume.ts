@@ -7,4 +7,10 @@ export interface Resource {
 export interface Resume {
   bestClients?: Resource[];
   bestSalesPeople?: Resource[];
+  grossProfit: {
+    total: number | null
+  },
+  netProfit: {
+    total: number | null
+  }
 }

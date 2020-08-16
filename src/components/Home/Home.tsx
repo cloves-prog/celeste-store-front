@@ -7,24 +7,25 @@ import Chart from "./Resume";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchResume } from "../../store/resume/actions";
 import { AppState } from "../../store";
+import ResumeWeekSales from "./ResumeWeekSales";
 
 const Home: React.FC = () => {
-  const resumeState = useSelector((state: AppState) => state.resume)
-const dispatch = useDispatch()
+  const resumeState = useSelector((state: AppState) => state.resume);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchResume())
-  }, [dispatch])
+    dispatch(fetchResume());
+  }, [dispatch]);
 
   const styles = makeStyles((theme) => ({
     root: {
       backgroundColor: theme.palette.grey[100],
-      height: '100vh',
+      height: "100vh",
     },
     title: {
       paddingTop: theme.spacing(3),
-      paddingLeft: theme.spacing(3)
-    }
+      paddingLeft: theme.spacing(3),
+    },
   }));
   const classes = styles();
   const location = useLocation();
@@ -38,12 +39,27 @@ const dispatch = useDispatch()
             Dashboard
           </Typography>
         </Grid>
+        <Grid container spacing={3}  justify="center">
+          <Grid item xs={6} md={4}>
+            <ResumeWeekSales title="Faturamento bruto nos ultimos 7 dias" value={resumeState.data?.grossProfit.total}/>
+          </Grid>
+
+          <Grid item xs={6} md={4}>
+            <ResumeWeekSales title="Faturamento líquido nos ultimos 7 dias" value={resumeState.data?.netProfit.total}/>
+          </Grid>
+        </Grid>
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <Chart title="Melhores Clientes" data={resumeState.data?.bestClients}/>
+            <Chart
+              title="Melhores Clientes"
+              data={resumeState.data?.bestClients}
+            />
           </Grid>
           <Grid item xs={6}>
-            <Chart title="Melhores Vendedores" data={resumeState.data?.bestSalesPeople}/>
+            <Chart
+              title="Melhores Vendedores"
+              data={resumeState.data?.bestSalesPeople}
+            />
           </Grid>
         </Grid>
       </div>

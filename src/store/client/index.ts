@@ -56,7 +56,7 @@ const reducer = (state = INITIAL_STATE, action: Action): ClientState => {
       case ActionTypes.DELETE_CLIENTS_ERROR:
         return{
           ...state,
-          messageError: "Ocorreu um erro ao atualizar o cliente"
+          messageError: "O cliente não pode ser deletado, pois possui vendas relacionadas."
         }
     default:
       return state;
