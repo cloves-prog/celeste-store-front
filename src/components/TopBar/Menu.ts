@@ -9,6 +9,10 @@ const Menu: MenuItem[] = [
     pathname: "/"
   },
   {
+    label: "Vendas",
+    pathname: "/sales"
+  },
+  {
     label: "Produtos",
     pathname: "/products"
   },

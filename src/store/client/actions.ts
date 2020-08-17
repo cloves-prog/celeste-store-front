@@ -20,6 +20,8 @@ export const fetchClients = () => async (dispatch: Dispatch<Action>) => {
 
 export const createClient = (data: Client) => async (dispatch: Dispatch<Action>) => {
   try {
+    console.log('TESTE', data);
+    
     const client = await create(data);
 
     dispatch({

@@ -19,7 +19,6 @@ const Home: React.FC = () => {
 
   const styles = makeStyles((theme) => ({
     root: {
-      backgroundColor: theme.palette.grey[100],
       height: "100vh",
     },
     title: {
@@ -34,18 +33,24 @@ const Home: React.FC = () => {
     <>
       <TopBar currentPath={location.pathname} />
       <div className={classes.root}>
-        <Grid item xs={12}>
-          <Typography className={classes.title} variant="h6" gutterBottom>
-            Dashboard
-          </Typography>
-        </Grid>
-        <Grid container spacing={3}  justify="center">
+        <Grid container spacing={3} justify="center">
+          <Grid item xs={12}>
+            <Typography className={classes.title} variant="h6" gutterBottom>
+              Dashboard
+            </Typography>
+          </Grid>
           <Grid item xs={6} md={4}>
-            <ResumeWeekSales title="Faturamento bruto nos ultimos 7 dias" value={resumeState.data?.grossProfit.total}/>
+            <ResumeWeekSales
+              title="Faturamento bruto nos ultimos 7 dias"
+              value={resumeState.data?.grossProfit.total}
+            />
           </Grid>
 
           <Grid item xs={6} md={4}>
-            <ResumeWeekSales title="Faturamento líquido nos ultimos 7 dias" value={resumeState.data?.netProfit.total}/>
+            <ResumeWeekSales
+              title="Faturamento líquido nos ultimos 7 dias"
+              value={resumeState.data?.netProfit.total}
+            />
           </Grid>
         </Grid>
         <Grid container spacing={3}>

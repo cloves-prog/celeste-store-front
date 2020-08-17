@@ -12,6 +12,7 @@ export const fetch = async (): Promise<Client[]> => {
 export const create = async (data: Client): Promise<Client> => {
   const response = await api.post(
     '/clients',
+    data
   );
 
   return response.data;

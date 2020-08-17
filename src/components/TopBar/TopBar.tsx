@@ -29,9 +29,10 @@ const TopBar: React.FC<Props> = (props: Props) => {
 
   const currentTab = () => {
     if (props.currentPath === "/") return 0;
-    if (props.currentPath === "/products") return 1;
-    if (props.currentPath === "/clients") return 2
-    if (props.currentPath === "/salespeople") return 3;
+    if (props.currentPath === "/sales") return 1;
+    if (props.currentPath === "/products") return 2;
+    if (props.currentPath === "/clients") return 3
+    if (props.currentPath === "/salespeople") return 4;
   };
 
   return (

@@ -38,7 +38,6 @@ const Clients: React.FC = () => {
     { 
       title: "Telefone", 
       field: "phone",
-      validate: (client) => validator(client.phone, 11, "phone"),
     },
   ];
   const handleDeleteRow = (oldData: Client): Promise<any> => {
@@ -47,8 +46,14 @@ const Clients: React.FC = () => {
   };
 
   const handleRowAdd = (newData: Client): Promise<any> => {
-    dispatch(createClient(newData));
-    return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      if (!isNaN(newData.phone)) {
+        dispatch(createClient(newData));
+        return resolve();
+      }
+
+      return reject();
+    });
   };
 
   const handleUpdateRow = (newData: Client, oldData: Client): Promise<any> => {

@@ -3,6 +3,7 @@ import TopBar from "../TopBar";
 import { useLocation } from "react-router-dom";
 import { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
+import swal from 'sweetalert';
 import {
   fetchProducts,
   deleteProduct,
@@ -19,7 +20,7 @@ const Products: React.FC = (props) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const productsState = useSelector((state: AppState) => state.products);
-
+  // const [consistenceError, setConsistenceError] = useState<boolean>(false)
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
@@ -51,9 +52,16 @@ const Products: React.FC = (props) => {
       validate: (product) => validator(product.classification, 3, "default"),
     },
     {
+      title: "Imagem (URL)",
+      field: "image",
+      // cellStyle: rowData => ({whiteSpace: 'nowrap'}),
+      validate: (product) => validator(product.image, 10, "default"),
+    },
+    {
       title: "Preço de custo",
       field: "cost_price",
-      type: "numeric",
+      type: "currency",
+
       validate: (product) =>
         !product || !product.cost_price
           ? {
@@ -65,7 +73,7 @@ const Products: React.FC = (props) => {
     {
       title: "Preço de venda",
       field: "sales_price",
-      type: "numeric",
+      type: "currency",
       validate: (product) =>
         !product || !product.sales_price
           ? {
@@ -101,8 +109,15 @@ const Products: React.FC = (props) => {
   ];
 
   const handleRowAdd = (newData: Product): Promise<any> => {
-    dispatch(createProduct(newData));
-    return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      if (!isNaN(newData.sales_price) || !isNaN(newData.cost_price)) {
+        dispatch(createProduct(newData));
+        // setConsistenceError(false)
+        return resolve();
+      }
+      swal("Aviso!", "Preencha os campos de preço corretamente!", "warning");
+      return reject();
+    });
   };
 
   const handleUpdateRow = (newData: Product): Promise<any> => {

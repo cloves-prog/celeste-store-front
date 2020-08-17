@@ -59,6 +59,7 @@ const Table: React.FC<Props> = (props: Props) => {
         title={props.title}
         columns={props.columns}
         data={props.data}
+
         editable={{
           onRowAdd: props.handleRowAdd,
           onRowUpdate: props.handleUpdateRow,
