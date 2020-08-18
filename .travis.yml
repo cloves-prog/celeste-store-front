@@ -7,7 +7,15 @@ script:
     - npm run build
     # - npm run test
 
+# deploy:
+#   provider: heroku
+#   api-key: $HEROKU_API_KEY
+#   app: celestes-store
+
 deploy:
-  provider: heroku
-  api-key: $HEROKU_API_KEY
-  app: celestes-store
+  provider: bluemixcloudfoundry
+  username: $IBMCLOUD_USERNAME
+  password: $IBMCLOUD_PASSWORD
+  organization: $IBMCLOUD_ORGANIZATION
+  space: dev
+  edge: true # opt in to dpl v2
