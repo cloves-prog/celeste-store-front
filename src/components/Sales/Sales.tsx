@@ -22,6 +22,9 @@ const Sales: React.FC = () => {
   const [confirmed, setConfirmed] = useState<boolean>(false)
 
   useEffect(() => {
+    dispatch({
+      type: ActionTypes.CLEAR
+    });
     dispatch(fetchProducts());
     dispatch(fetchSalesPeople());
     dispatch(fetchClients());

@@ -58,6 +58,10 @@ export default function reducer(state = INITIAL_STATE, action: Action) {
         ...INITIAL_STATE,
         created: true,
       };
+    case ActionTypes.CLEAR:
+      return {
+        ...INITIAL_STATE,
+      };
     case ActionTypes.CLOSE_ALERT_SUCCESS:
       return {
         ...state,

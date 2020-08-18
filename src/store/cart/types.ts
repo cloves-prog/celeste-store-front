@@ -21,6 +21,7 @@ export enum ActionTypes {
   CREATE_SALE_SUCCESS = "cart/CREATE_SALE_SUCCESS",
   CREATE_SALE_ERROR = "cart/CREATE_SALE_ERROR",
   CLOSE_ALERT_SUCCESS = "cart/CLOSE_ALERT_SUCCESS",
+  CLEAR = "cart/CLEAR",
 }
 
 export interface AddItemAction {
@@ -54,6 +55,9 @@ export interface CloseAlertSuccess {
   type: ActionTypes.CLOSE_ALERT_SUCCESS
 }
 
+export interface ClearAction {
+  type: ActionTypes.CLEAR
+}
 export type Action =
   | AddItemAction
   | RemoveItemAction
@@ -61,4 +65,5 @@ export type Action =
   | SetSalesPeopleId
   | CreateSaleSuccess
   | CreateSaleError
-  | CloseAlertSuccess;
+  | CloseAlertSuccess
+  | ClearAction ;
