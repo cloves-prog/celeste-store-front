@@ -27,15 +27,15 @@ const Item: React.FC<Props> = (props) => {
   let [quantity, setQuantity] = useState<number>(0);
   let [quantityTotal, setQuantityTotal] = useState<number>(0);
 
-  const cart = useSelector((state: AppState) => state.cart);
+  const state = useSelector((state: AppState) => state);
 
   useEffect(() => {
-    if (cart.created) {
+    if (state.cart.created) {
       setQuantity(0);
     }
 
     setQuantityTotal(props.data.store_quantity + props.data.stock_quantity);
-  }, [cart.created, props.data.stock_quantity, props.data.store_quantity]);
+  }, [state.cart.created, props.data.stock_quantity, props.data.store_quantity]);
 
   const handleAdd = () => {
     if (quantity === quantityTotal) {
@@ -106,8 +106,10 @@ const Item: React.FC<Props> = (props) => {
         </Typography>
       </CardContent>
       <Typography align="center" variant="h6" color="textSecondary">
-        {quantity}
+        {state.user.isAuthenticated && quantity}
       </Typography>
+      {state.user.isAuthenticated && 
+      
       <CardActions className={classes.actionButtons}>
         <IconButton onClick={handleRemove} aria-label="Remover do carrinho">
           <RemoveIcon />
@@ -119,7 +121,7 @@ const Item: React.FC<Props> = (props) => {
         >
           <AddIcon />
         </IconButton>
-      </CardActions>
+      </CardActions>}
     </Card>
   );
 };

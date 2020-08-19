@@ -6,6 +6,7 @@ import salesPeople from './sales-people';
 import resume from './resume';
 import cart from './cart';
 import sales from './sales';
+import user from './user';
 
 const rootReducer = combineReducers({
   products,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   resume,
   cart,
   sales,
+  user,
 })
 
 export type AppState = ReturnType<typeof rootReducer>
