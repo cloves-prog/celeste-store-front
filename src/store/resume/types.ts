@@ -1,7 +1,7 @@
-import {  Resume } from "../../interfaces/Resume";
+import { Resume } from "../../interfaces/Resume";
 
 export interface ResumeState {
-  data?: Resume;
+  data: Resume;
   messageError: string | null;
 }
 

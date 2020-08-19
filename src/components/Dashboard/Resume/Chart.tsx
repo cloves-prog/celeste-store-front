@@ -52,7 +52,8 @@ const Chart: React.FC<Props> = (props: Props) => {
               <CartesianGrid />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip formatter={(value) =>
+                new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(value as number)}/>
               <Legend />
               <Bar
                 dataKey="total"

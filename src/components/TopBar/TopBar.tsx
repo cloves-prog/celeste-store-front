@@ -33,7 +33,7 @@ const TopBar: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const currentTab = () => {
-    if (props.currentPath === "/") return null;
+    if (props.currentPath === "/") return;
     if (props.currentPath === "/dashboard") return 0;
     if (props.currentPath === "/sales") return 1;
     if (props.currentPath === "/products") return 2;

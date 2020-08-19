@@ -55,16 +55,16 @@ const Dashboard: React.FC = () => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <Chart
+            {resumeState.data.bestClients.length > 0 && <Chart
               title="Melhores Clientes"
               data={resumeState.data?.bestClients}
-            />
+            />}
           </Grid>
           <Grid item xs={6}>
-            <Chart
+            {resumeState.data.bestSalesPeople.length > 0 && <Chart
               title="Melhores Vendedores"
-              data={resumeState.data?.bestSalesPeople}
-            />
+              data={resumeState.data.bestSalesPeople}
+            />}
           </Grid>
         </Grid>
       </div>

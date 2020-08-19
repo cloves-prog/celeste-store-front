@@ -86,7 +86,7 @@ const Catalog: React.FC = () => {
       <Grid spacing={3} className={classes.root} container>
         <Grid item xs={12}>
           <Typography className={classes.title} variant="h6" gutterBottom>
-            Catálogo de produtos
+            Catálogo
           </Typography>
 
         </Grid>

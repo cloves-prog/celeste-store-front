@@ -5,12 +5,12 @@ export interface Resource {
 }
 
 export interface Resume {
-  bestClients?: Resource[];
-  bestSalesPeople?: Resource[];
+  bestClients: Resource[];
+  bestSalesPeople: Resource[];
   grossProfit: {
-    total: number | null
+    total: number
   },
   netProfit: {
-    total: number | null
+    total: number
   }
 }

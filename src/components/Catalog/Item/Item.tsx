@@ -1,40 +1,53 @@
-import React, { useState, useEffect } from 'react'
-import { Card, CardHeader, CardMedia, CardContent, Typography, CardActions, IconButton, makeStyles, createStyles } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
-import swal from 'sweetalert';
-import { Product } from '../../../interfaces/Product';
-import { useDispatch, useSelector } from 'react-redux';
-import { ActionTypes } from '../../../store/cart/types';
-import { AppState } from '../../../store';
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  IconButton,
+  makeStyles,
+  createStyles,
+} from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
+import swal from "sweetalert";
+import { Product } from "../../../interfaces/Product";
+import { useDispatch, useSelector } from "react-redux";
+import { ActionTypes } from "../../../store/cart/types";
+import { AppState } from "../../../store";
 
 interface Props {
-  data: Product
+  data: Product;
 }
 
 const Item: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
-  let [quantity, setQuantity] = useState<number>(0)
+  let [quantity, setQuantity] = useState<number>(0);
+  let [quantityTotal, setQuantityTotal] = useState<number>(0);
 
-  const cart = useSelector((state: AppState) => state.cart)
+  const cart = useSelector((state: AppState) => state.cart);
 
   useEffect(() => {
     if (cart.created) {
-      setQuantity(0)  
+      setQuantity(0);
     }
-  }, [cart.created])
+
+    setQuantityTotal(props.data.store_quantity + props.data.stock_quantity);
+  }, [cart.created, props.data.stock_quantity, props.data.store_quantity]);
 
   const handleAdd = () => {
-    if (quantity === props.data.store_quantity) {
+    if (quantity === quantityTotal) {
       swal("Aviso!", "Quantiidade em loja esgotada 😔", "warning");
       return;
     }
     setQuantity(++quantity);
     dispatch({
       type: ActionTypes.ADD_ITEM,
-      payload: props.data
-    })
-  }
+      payload: props.data,
+    });
+  };
 
   const handleRemove = () => {
     if (quantity === 0) {
@@ -43,34 +56,32 @@ const Item: React.FC<Props> = (props) => {
     setQuantity(--quantity);
     dispatch({
       type: ActionTypes.REMOVE_ITEM,
-      payload: props.data
+      payload: props.data,
+    });
+  };
+  const useStyles = makeStyles((theme) =>
+    createStyles({
+      root: {
+        maxWidth: 345,
+        margin: "auto",
+      },
+      media: {
+        height: 0,
+        paddingTop: "56.25%", // 16:9
+      },
+      price: {
+        marginTop: theme.spacing(2),
+      },
+      actionButtons: {
+        display: "flex",
+        justifyContent: "center",
+      },
     })
-  }
-  const useStyles = makeStyles(theme =>
-  createStyles({
-    root: {
-      maxWidth: 345,
-      margin: 'auto',
-    },
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    price: {
-      marginTop: theme.spacing(2)
-    },
-    actionButtons: {
-      display: 'flex',
-      justifyContent: 'center'
-    },
-  }),
-);
+  );
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      <CardHeader
-        title={props.data.name}
-      />
+      <CardHeader title={props.data.name} />
       <CardMedia
         className={classes.media}
         image={props.data.image}
@@ -80,24 +91,37 @@ const Item: React.FC<Props> = (props) => {
         <Typography variant="body2" color="textSecondary" component="p">
           {props.data.description}
         </Typography>
-        <Typography className={classes.price} variant="h5" color="textSecondary" >
-          <strong>R$ {props.data.sales_price}</strong>  
+        <Typography
+          className={classes.price}
+          variant="h5"
+          color="textSecondary"
+        >
+          <strong>
+            {" "}
+            {new Intl.NumberFormat("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }).format(props.data.sales_price as number)}
+          </strong>
         </Typography>
       </CardContent>
-      <Typography align="center"  variant="h6" color="textSecondary" >
+      <Typography align="center" variant="h6" color="textSecondary">
         {quantity}
       </Typography>
       <CardActions className={classes.actionButtons}>
-        <IconButton onClick={handleRemove}  aria-label="Remover do carrinho">
+        <IconButton onClick={handleRemove} aria-label="Remover do carrinho">
           <RemoveIcon />
         </IconButton>
-        <IconButton disabled={props.data.store_quantity === 0} onClick={handleAdd} aria-label="adicionar no carrinho">
+        <IconButton
+          disabled={quantityTotal === 0}
+          onClick={handleAdd}
+          aria-label="adicionar no carrinho"
+        >
           <AddIcon />
         </IconButton>
       </CardActions>
     </Card>
   );
 };
-
 
 export default Item;

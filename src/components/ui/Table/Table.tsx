@@ -25,6 +25,7 @@ const Table: React.FC<Props> = (props: Props) => {
     <div className={styles.tableContainer}>
       <MaterialTable
         localization={{
+          
           pagination: {
             labelDisplayedRows: "{from}-{to} de {count}",
             labelRowsSelect: "Linhas por página",
@@ -59,7 +60,7 @@ const Table: React.FC<Props> = (props: Props) => {
         title={props.title}
         columns={props.columns}
         data={props.data}
-
+        options={{actionsColumnIndex: -1}}
         editable={{
           onRowAdd: props.handleRowAdd,
           onRowUpdate: props.handleUpdateRow,

@@ -1,24 +1,29 @@
-import React from 'react'
+import React from "react";
 import { Paper, Typography, makeStyles } from "@material-ui/core";
 interface Props {
-  value?: number | null;
+  value?: number;
   title: string;
 }
 const ResumeWeekSales: React.FC<Props> = (props) => {
-  const styles = makeStyles(theme => ({
+  const styles = makeStyles((theme) => ({
     paper: {
       padding: theme.spacing(3),
       margin: theme.spacing(2),
       textAlign: "left",
-      color: theme.palette.text.secondary
+      color: theme.palette.text.secondary,
     },
     blockCenter: {
       padding: theme.spacing(2),
-      textAlign: "center"
-    }
-  }))
+      textAlign: "center",
+    },
+  }));
 
   const classes = styles();
+  const formatCurrency = (current: number) =>
+    new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(current);
   return (
     <Paper className={classes.paper}>
       <div>
@@ -27,11 +32,7 @@ const ResumeWeekSales: React.FC<Props> = (props) => {
         </Typography>
         <div className={classes.blockCenter}>
           <Typography color="primary" variant="h6" gutterBottom>
-            {
-              props.value ?
-            `R$ ${props.value}` :
-            `R$ 0.00` 
-            }
+            {formatCurrency(props.value || 0)}
           </Typography>
         </div>
       </div>

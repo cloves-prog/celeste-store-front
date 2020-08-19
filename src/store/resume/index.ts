@@ -2,6 +2,16 @@ import { Action, ActionTypes, ResumeState } from "./types";
 
 const INITIAL_STATE: ResumeState = {
   messageError: null,
+  data: {
+    bestClients: [],
+    bestSalesPeople: [],
+    grossProfit: {
+      total: 0
+    },
+    netProfit: {
+      total: 0
+    }
+  },
 };
 
 export default function reducer(state = INITIAL_STATE, action: Action) {

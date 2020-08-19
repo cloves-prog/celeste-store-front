@@ -11,6 +11,7 @@ import {
   deleteClient,
 } from "../../store/client/actions";
 import { Column } from "material-table";
+import swal from 'sweetalert';
 import { Client } from "../../interfaces/Client";
 import Table from "../ui/Table";
 import validator from '../../commons/validate';
@@ -52,6 +53,7 @@ const Clients: React.FC = () => {
         return resolve();
       }
 
+      swal("Aviso!", "Preencha o campo telefone!", "warning");
       return reject();
     });
   };
