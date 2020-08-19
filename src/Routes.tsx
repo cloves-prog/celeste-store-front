@@ -2,7 +2,7 @@ import React from "react";
 import {
   Route,
   Switch,
-  BrowserRouter,
+  HashRouter,
   Redirect,
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
@@ -29,7 +29,7 @@ const PrivateRoute = ({ component: Component, ...rest }: any) => (
 );
 
 const Routes: React.FC = () => (
-  <BrowserRouter>
+  <HashRouter>
     <Switch>
       <Route exact path="/" component={Catalog} />
       <PrivateRoute exact path="/dashboard" component={Dashboard} />
@@ -38,7 +38,7 @@ const Routes: React.FC = () => (
       <PrivateRoute exact path="/clients" component={Clients} />
       <PrivateRoute exact path="/salespeople" component={SalesPeople} />
     </Switch>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 export default Routes;

@@ -26,7 +26,7 @@ switch (action.type) {
     case ActionTypes.LOGIN_SUCCESS:
       
       localStorage.setItem('usertoken', action.payload.token || '')
-
+      window.location.reload();
       return {
         ...state,
         data: action.payload,
