@@ -5,8 +5,8 @@ interface MenuItem {
 
 const Menu: MenuItem[] = [
   {
-    label: "Home",
-    pathname: "/"
+    label: "Dashboard",
+    pathname: "/dashboard"
   },
   {
     label: "Vendas",

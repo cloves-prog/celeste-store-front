@@ -6,8 +6,8 @@ interface Props {
   columns: Column<any>[];
   data: any[];
   title: string;
-  handleRowAdd: (newData: any) => Promise<any>;
-  handleUpdateRow: (newData: any, oldData?: any) => Promise<any>;
+  handleRowAdd?: (newData: any) => Promise<any>;
+  handleUpdateRow?: (newData: any, oldData?: any) => Promise<any>;
   handleDeleteRow: (oldData: any) => Promise<any>;
 }
 

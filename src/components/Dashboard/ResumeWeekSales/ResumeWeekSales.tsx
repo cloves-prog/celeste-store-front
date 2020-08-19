@@ -26,7 +26,7 @@ const ResumeWeekSales: React.FC<Props> = (props) => {
           {props.title}
         </Typography>
         <div className={classes.blockCenter}>
-          <Typography color="secondary" variant="h6" gutterBottom>
+          <Typography color="primary" variant="h6" gutterBottom>
             {
               props.value ?
             `R$ ${props.value}` :

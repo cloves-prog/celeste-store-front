@@ -9,7 +9,7 @@ import { fetchResume } from "../../store/resume/actions";
 import { AppState } from "../../store";
 import ResumeWeekSales from "./ResumeWeekSales";
 
-const Home: React.FC = () => {
+const Dashboard: React.FC = () => {
   const resumeState = useSelector((state: AppState) => state.resume);
   const dispatch = useDispatch();
 
@@ -72,4 +72,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

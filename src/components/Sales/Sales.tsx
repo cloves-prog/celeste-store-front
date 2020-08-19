@@ -1,112 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import TopBar from "../TopBar";
 import { useLocation } from "react-router-dom";
-import Item from "./Item";
-import { Grid, createStyles, makeStyles, Typography, Fab } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
-import { fetchProducts } from "../../store/product/actions";
 import { AppState } from "../../store";
-import ModalConfirmSale from "./ModalConfirmSale";
-import { fetchSalesPeople } from "../../store/sales-people/actions";
-import { fetchClients } from "../../store/client/actions";
 import AlertError from "../ui/AlertError";
-import { Alert } from "@material-ui/lab";
-import { ActionTypes } from "../../store/cart/types";
+import { fetchSales, deleteSale } from "../../store/sales/actions"
+import { Sale } from "../../interfaces/Sale";
+import Table from "../ui/Table";
+import { Column } from "material-table";
 
-const Sales: React.FC = () => {
+
+const Sales: React.FC = (props) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const products = useSelector((state: AppState) => state.products);
-  const cart = useSelector((state: AppState) => state.cart);
-  const [confirmed, setConfirmed] = useState<boolean>(false)
-
+  const salesState = useSelector((state: AppState) => state.sales);
   useEffect(() => {
-    dispatch({
-      type: ActionTypes.CLEAR
-    });
-    dispatch(fetchProducts());
-    dispatch(fetchSalesPeople());
-    dispatch(fetchClients());
+    dispatch(fetchSales());
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [cart.created, dispatch]);
-
-  const handleFinish = () => {
-    console.log(cart.products);
-    setConfirmed(true);
+  const handleDelete = (sale: Sale): Promise<any> => {
+    dispatch(deleteSale(sale))
+    return Promise.resolve();
   }
 
-  const useStyles = makeStyles((theme) =>
-    createStyles({
-      root: {
-        marginTop: theme.spacing(3),
+  const columns: Column<Sale>[] = [
+      {
+        title: "Produtos vendidos",
+        field: "products",
       },
-      title: {
-        paddingLeft: theme.spacing(3),
+      {
+        title: "Nome do cliente",
+        field: "client_name",
       },
-      buttonCart: {
-        position: 'absolute',
-        top: 100,
-        right: 60
+      {
+        title: "Nome do vendedor",
+        field: "sales_people_name",
       },
-      alertSuccess: {
-        margin: theme.spacing(3)
-      }
-    })
-  );
-  const classes = useStyles();
-  
-  const handleCloseModal = () => {
-    setConfirmed(false);
-  }
-  const closeAlert = () => {
-    dispatch({
-      type: ActionTypes.CLOSE_ALERT_SUCCESS
-    })
-  }
+  ]
 
   return (
     <>
-      {cart.messageError &&
-        <AlertError message={cart.messageError} />
-      }
-    
       <TopBar currentPath={location.pathname} />
-      {cart.created && 
-        <Alert 
-          className={classes.alertSuccess} 
-          onClose={closeAlert}
-      > <span role="img" aria-label="smile"> Venda registrada com sucesso! 😃 </span></Alert>}
+      {salesState.messageError && (
+        <AlertError message={salesState.messageError} />
+      )}
       
-      <ModalConfirmSale open={confirmed} handleClose={handleCloseModal}/>
-      
-      <Grid spacing={3} className={classes.root} container>
-        <Grid item xs={12}>
-          <Typography className={classes.title} variant="h6" gutterBottom>
-            Registrar venda
-          </Typography>
-
-        </Grid>
-        {products.data?.map(product => 
-            <Grid key={product.id} item xs={6} md={4} >
-               <Item data={product}/>
-            </Grid>
-        )}
-      </Grid>
-      <Fab 
-        onClick={handleFinish}
-        disabled={cart.products.length < 1} 
-        variant="extended" 
-        className={classes.buttonCart} 
-        color="primary" 
-        aria-label="add"
-      >
-        <AddShoppingCart />
-        Finalizar
-      </Fab>
+      <Table
+        columns={columns}
+        handleDeleteRow={handleDelete}
+        data={salesState.data}
+        title="Vendas realizadas"
+      ></Table>
+    
     </>
   );
 };
