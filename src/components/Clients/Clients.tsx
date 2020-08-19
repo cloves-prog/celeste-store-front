@@ -39,6 +39,7 @@ const Clients: React.FC = () => {
     { 
       title: "Telefone", 
       field: "phone",
+
     },
   ];
   const handleDeleteRow = (oldData: Client): Promise<any> => {
@@ -48,19 +49,27 @@ const Clients: React.FC = () => {
 
   const handleRowAdd = (newData: Client): Promise<any> => {
     return new Promise((resolve, reject) => {
-      if (!isNaN(newData.phone)) {
+      if (newData.phone && !isNaN(newData.phone)) {
         dispatch(createClient(newData));
         return resolve();
       }
 
-      swal("Aviso!", "Preencha o campo telefone!", "warning");
+      swal("Aviso!", "Preencha o campo telefone somente com números!", "warning");
       return reject();
     });
   };
 
   const handleUpdateRow = (newData: Client, oldData: Client): Promise<any> => {
-    dispatch(updateClient(newData));
-    return Promise.resolve();
+    console.log('TESTE:   ', newData);
+    return new Promise((resolve, reject) => {
+      if (newData.phone && !isNaN(newData.phone)) {
+        dispatch(updateClient(newData));
+        return resolve();
+      }
+
+      swal("Aviso!", "Preencha o campo telefone somente com números!", "warning");
+      return reject();
+    });
   };
 
   return (

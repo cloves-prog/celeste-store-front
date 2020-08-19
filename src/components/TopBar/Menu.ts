@@ -5,7 +5,7 @@ interface MenuItem {
 
 const Menu: MenuItem[] = [
   {
-    label: "Registro de vendas",
+    label: "Vendas",
     pathname: "/catalog"
   },
   {
@@ -13,7 +13,7 @@ const Menu: MenuItem[] = [
     pathname: "/dashboard"
   },
   {
-    label: "Vendas",
+    label: "Registro de vendas",
     pathname: "/sales"
   },
   {

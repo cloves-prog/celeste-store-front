@@ -14,6 +14,7 @@ import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import swal from "sweetalert";
 import { Product } from "../../../interfaces/Product";
+import  imgDefaultProduct  from "../../../assets/default-product.png";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionTypes } from "../../../store/cart/types";
 import { AppState } from "../../../store";
@@ -84,7 +85,7 @@ const Item: React.FC<Props> = (props) => {
       <CardHeader component="h2" title={props.data.name} />
       <CardMedia
         className={classes.media}
-        image={props.data.image}
+        image={props.data.image || imgDefaultProduct}
         title={props.data.name}
       />
       <CardContent>

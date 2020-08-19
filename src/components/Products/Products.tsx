@@ -87,6 +87,11 @@ const Products: React.FC = (props) => {
         return reject();
       }
 
+      if (newData.stock_quantity < 0 || newData.store_quantity < 0) {
+        swal("Aviso!", "Preencha os campos de preço corretamente!", "warning");
+        return reject();
+      }
+
       if (isNaN(newData.sales_price) || isNaN(newData.cost_price)) {
         swal("Aviso!", "Preencha os campos de preço corretamente!", "warning");
         return reject();
@@ -104,18 +109,13 @@ const Products: React.FC = (props) => {
         return reject();
       }
 
-      if (
-        isNaN(newData.sales_price) ||
-        isNaN(newData.cost_price) ||
-        newData.cost_price >= 0 ||
-        newData.sales_price >= 0
-      ) {
-        swal("Aviso!", "Preencha os campos de quantidade!", "warning");
+      if (newData.stock_quantity < 0 || newData.store_quantity < 0) {
+        swal("Aviso!", "Preencha os campos de preço corretamente!", "warning");
         return reject();
       }
 
-      if (newData.stock_quantity >= 0 || newData.store_quantity >= 0) {
-        swal("Aviso!", "Preencha os campos de preço corretamente!", "warning");
+      if (isNaN(newData.sales_price) || isNaN(newData.cost_price) ) {
+        swal("Aviso!", "Preencha os campos de quantidade!", "warning");
         return reject();
       }
 
