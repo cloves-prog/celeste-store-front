@@ -10,7 +10,11 @@ import {
   Select,
   MenuItem,
   Button,
+  List,
+  ListItem,
+  ListItemText,
 } from "@material-ui/core";
+
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../../store";
 import { ActionTypes } from "../../../store/cart/types";
@@ -51,6 +55,15 @@ const ModalConfirmSale: React.FC<Props> = (props) => {
         display: "block",
         margin: "24px auto",
       },
+      list: {
+        width: "100%",
+        maxHeight: 500,
+        backgroundColor: theme.palette.background.paper,
+        overflow: "auto",
+      },
+      itemSum: {
+        textAlign: "end",
+      },
     })
   );
   const classes = useStyles();
@@ -66,23 +79,31 @@ const ModalConfirmSale: React.FC<Props> = (props) => {
       return;
     }
 
-    dispatch(persistSale(state.cart))
+    dispatch(persistSale(state.cart));
     props.handleClose();
   };
 
-  const handleChangeSalesPeople = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChangeSalesPeople = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
     dispatch({
       type: ActionTypes.SET_SALES_PEOPLE_ID,
-      payload: event.target.value
-    })
-  }
+      payload: event.target.value,
+    });
+  };
 
   const handleChangeClient = (event: React.ChangeEvent<{ value: unknown }>) => {
     dispatch({
       type: ActionTypes.SET_CLIENT_ID,
-      payload: event.target.value
-    })
-  }
+      payload: event.target.value,
+    });
+  };
+  const formatCurrency = (current: number) =>
+  new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(current);
+  let totalGeneral = 0;
 
   return (
     <Modal
@@ -98,50 +119,80 @@ const ModalConfirmSale: React.FC<Props> = (props) => {
       }}
     >
       <Fade in={props.open}>
-        <form className={classes.paper} autoComplete="off">
-          <FormControl className={classes.formControl}>
-            <InputLabel id="sales-people-id-label">Vendedor</InputLabel>
-            <Select
-              onChange={handleChangeSalesPeople}
-              value={state.cart.salesPeopleId || ''}
-              error={salesPeopleError}
-              labelId="sales-people-id-label"
-              id="sales-people-id"
-            >
-              {state.salesPeople.data.map((salePeople) => (
-                <MenuItem key={salePeople.id} value={salePeople.id}>
-                  {salePeople.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+        <div>
+          <List className={classes.list}>
+            {state.cart.products.map((product) => {
+              const productState = state.products.data.find((item) => item.id === product.id)
+              const total = product.quantity * productState!.sales_price
+              totalGeneral += total;
+              return (
+                <ListItem key={product.id}>
+                  <ListItemText
+                    primary={productState?.name}
+                    secondary={`Quantidade: ${product.quantity}`}
+                  />
+                  <ListItemText
+                    className={classes.itemSum}
+                    secondary={`Total: ${formatCurrency(total)}`}
+                  />
+                </ListItem>
+              );
+            })}
 
-          <FormControl className={classes.formControl}>
-            <InputLabel id="client-id-label">Cliente</InputLabel>
-            <Select
-              onChange={handleChangeClient}
-              value={state.cart.clientId || ''}
-              error={clientError}
-              labelId="client-id-label"
-              id="client-id"
-            >
-              {state.clients.data.map((client) => (
-                <MenuItem key={client.id} value={client.id}>
-                  {client.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+            <ListItem>
+              <ListItemText primary="" secondary="" />
+              <ListItemText
+                className={classes.itemSum}
+                primary="Total"
+                secondary={formatCurrency(totalGeneral)}
+              />
+            </ListItem>
+          </List>
+          <form className={classes.paper} autoComplete="off">
+            <FormControl className={classes.formControl}>
+              <InputLabel id="sales-people-id-label">Vendedor</InputLabel>
+              <Select
+                onChange={handleChangeSalesPeople}
+                value={state.cart.salesPeopleId || ""}
+                error={salesPeopleError}
+                labelId="sales-people-id-label"
+                id="sales-people-id"
+              >
+                {state.salesPeople.data.map((salePeople) => (
+                  <MenuItem key={salePeople.id} value={salePeople.id}>
+                    {salePeople.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-          <Button
-            onClick={confirmSale}
-            className={classes.button}
-            variant="contained"
-            color="primary"
-          >
-            Confirmar venda
-          </Button>
-        </form>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="client-id-label">Cliente</InputLabel>
+              <Select
+                onChange={handleChangeClient}
+                value={state.cart.clientId || ""}
+                error={clientError}
+                labelId="client-id-label"
+                id="client-id"
+              >
+                {state.clients.data.map((client) => (
+                  <MenuItem key={client.id} value={client.id}>
+                    {client.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <Button
+              onClick={confirmSale}
+              className={classes.button}
+              variant="contained"
+              color="primary"
+            >
+              Confirmar venda
+            </Button>
+          </form>
+        </div>
       </Fade>
     </Modal>
   );
