@@ -5,6 +5,10 @@ interface MenuItem {
 
 const Menu: MenuItem[] = [
   {
+    label: "Registro de vendas",
+    pathname: "/catalog"
+  },
+  {
     label: "Dashboard",
     pathname: "/dashboard"
   },

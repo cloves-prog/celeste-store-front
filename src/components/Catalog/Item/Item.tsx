@@ -81,7 +81,7 @@ const Item: React.FC<Props> = (props) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      <CardHeader title={props.data.name} />
+      <CardHeader component="h2" title={props.data.name} />
       <CardMedia
         className={classes.media}
         image={props.data.image}
@@ -94,6 +94,7 @@ const Item: React.FC<Props> = (props) => {
         <Typography
           className={classes.price}
           variant="h5"
+          component="p"
           color="textSecondary"
         >
           <strong>
@@ -105,7 +106,7 @@ const Item: React.FC<Props> = (props) => {
           </strong>
         </Typography>
       </CardContent>
-      <Typography align="center" variant="h6" color="textSecondary">
+      <Typography align="center" variant="h6" component="p" color="textSecondary">
         {state.user.isAuthenticated && quantity}
       </Typography>
       {state.user.isAuthenticated && 

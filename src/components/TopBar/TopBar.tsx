@@ -64,12 +64,13 @@ const TopBar: React.FC<Props> = (props: Props) => {
   },[user.isAuthenticated, history])
 
   const currentTab = () => {
-    if (props.currentPath === "/") return;
-    if (props.currentPath === "/dashboard") return 0;
-    if (props.currentPath === "/sales") return 1;
-    if (props.currentPath === "/products") return 2;
-    if (props.currentPath === "/clients") return 3;
-    if (props.currentPath === "/salespeople") return 4;
+    if (props.currentPath === "/") return 0;
+    if (props.currentPath === "/catalog") return 0;
+    if (props.currentPath === "/dashboard") return 1;
+    if (props.currentPath === "/sales") return 2;
+    if (props.currentPath === "/products") return 3;
+    if (props.currentPath === "/clients") return 4;
+    if (props.currentPath === "/salespeople") return 5;
   };
   const handleLogin = (user: User) => {
     dispatch(signIn(user))
@@ -82,7 +83,7 @@ const TopBar: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <AppBar position="relative" color="inherit" className={classes.appBar}>
+    <AppBar component="nav" position="relative" color="inherit" className={classes.appBar}>
       <SignIn show={showModal && !user.isAuthenticated} handleLogin={handleLogin} /> 
       <Toolbar>
         <Link to="/">

@@ -4,11 +4,10 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../store";
 import AlertError from "../ui/AlertError";
-import { fetchSales, deleteSale } from "../../store/sales/actions"
+import { fetchSales, deleteSale } from "../../store/sales/actions";
 import { Sale } from "../../interfaces/Sale";
 import Table from "../ui/Table";
 import { Column } from "material-table";
-
 
 const Sales: React.FC = (props) => {
   const location = useLocation();
@@ -19,24 +18,24 @@ const Sales: React.FC = (props) => {
   }, [dispatch]);
 
   const handleDelete = (sale: Sale): Promise<any> => {
-    dispatch(deleteSale(sale))
+    dispatch(deleteSale(sale));
     return Promise.resolve();
-  }
+  };
 
   const columns: Column<Sale>[] = [
-      {
-        title: "Produtos vendidos",
-        field: "products",
-      },
-      {
-        title: "Nome do cliente",
-        field: "client_name",
-      },
-      {
-        title: "Nome do vendedor",
-        field: "sales_people_name",
-      },
-  ]
+    {
+      title: "Produtos vendidos",
+      field: "products",
+    },
+    {
+      title: "Nome do vendedor",
+      field: "sales_people_name",
+    },
+    {
+      title: "Nome do cliente",
+      field: "client_name",
+    },
+  ];
 
   return (
     <>
@@ -44,14 +43,13 @@ const Sales: React.FC = (props) => {
       {salesState.messageError && (
         <AlertError message={salesState.messageError} />
       )}
-      
+
       <Table
         columns={columns}
         handleDeleteRow={handleDelete}
         data={salesState.data}
         title="Vendas realizadas"
       ></Table>
-    
     </>
   );
 };

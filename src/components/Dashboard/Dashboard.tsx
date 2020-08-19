@@ -24,6 +24,7 @@ const Dashboard: React.FC = () => {
     title: {
       paddingTop: theme.spacing(3),
       paddingLeft: theme.spacing(3),
+      fontSize: 24
     },
   }));
   const classes = styles();
@@ -35,7 +36,7 @@ const Dashboard: React.FC = () => {
       <div className={classes.root}>
         <Grid container spacing={3} justify="center">
           <Grid item xs={12}>
-            <Typography className={classes.title} variant="h6" gutterBottom>
+            <Typography className={classes.title} variant="h1" gutterBottom>
               Dashboard
             </Typography>
           </Grid>

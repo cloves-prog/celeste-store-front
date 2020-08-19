@@ -52,6 +52,7 @@ const Catalog: React.FC = () => {
       },
       title: {
         paddingLeft: theme.spacing(3),
+        fontSize: 24
       },
       buttonCart: {
         position: "absolute",
@@ -93,7 +94,7 @@ const Catalog: React.FC = () => {
 
       <Grid spacing={3} className={classes.root} container>
         <Grid item xs={12}>
-          <Typography className={classes.title} variant="h6" gutterBottom>
+          <Typography className={classes.title} variant="h1" gutterBottom>
             Catálogo
           </Typography>
         </Grid>

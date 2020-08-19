@@ -3,7 +3,7 @@ import TopBar from "../TopBar";
 import { useLocation } from "react-router-dom";
 import { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 import {
   fetchProducts,
   deleteProduct,
@@ -48,41 +48,41 @@ const Products: React.FC = (props) => {
     {
       title: "Imagem (URL)",
       field: "image",
-      cellStyle: {whiteSpace:'nowrap', maxWidth: 50, overflow: 'hidden'}
+      cellStyle: { whiteSpace: "nowrap", maxWidth: 50, overflow: "hidden" },
     },
     {
       title: "Preço de custo",
       field: "cost_price",
       type: "currency",
       currencySetting: {
-        locale: 'pt-BR',
-        currencyCode: 'BRL'
-      }
+        locale: "pt-BR",
+        currencyCode: "BRL",
+      },
     },
     {
       title: "Preço de venda",
       field: "sales_price",
       type: "currency",
       currencySetting: {
-        locale: 'pt-BR',
-        currencyCode: 'BRL'
-      }
+        locale: "pt-BR",
+        currencyCode: "BRL",
+      },
     },
     {
       title: "Quantidade em estoque",
       field: "stock_quantity",
       type: "numeric",
     },
-    { 
-      title: "Quantidade em loja", 
-      field: "store_quantity", 
+    {
+      title: "Quantidade em loja",
+      field: "store_quantity",
       type: "numeric",
     },
   ];
 
   const handleRowAdd = (newData: Product): Promise<any> => {
     return new Promise((resolve, reject) => {
-      if (!newData.name || newData.name.length < 3) {  
+      if (!newData.name || newData.name.length < 3) {
         swal("Aviso!", "Preencha o campo nome corretamente!", "warning");
         return reject();
       }
@@ -99,13 +99,22 @@ const Products: React.FC = (props) => {
 
   const handleUpdateRow = (newData: Product): Promise<any> => {
     return new Promise((resolve, reject) => {
-
-      if (!newData.name || newData.name.length < 3) {  
+      if (!newData.name || newData.name.length < 3) {
         swal("Aviso!", "Preencha o campo nome corretamente!", "warning");
         return reject();
       }
 
-      if (isNaN(newData.sales_price) || isNaN(newData.cost_price)) {
+      if (
+        isNaN(newData.sales_price) ||
+        isNaN(newData.cost_price) ||
+        newData.cost_price >= 0 ||
+        newData.sales_price >= 0
+      ) {
+        swal("Aviso!", "Preencha os campos de quantidade!", "warning");
+        return reject();
+      }
+
+      if (newData.stock_quantity >= 0 || newData.store_quantity >= 0) {
         swal("Aviso!", "Preencha os campos de preço corretamente!", "warning");
         return reject();
       }
